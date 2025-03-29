@@ -1,0 +1,43 @@
+package portfolio.project.bookingapp.mapper;
+
+import java.util.Set;
+import java.util.stream.Collectors;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
+import portfolio.project.bookingapp.config.MapperConfig;
+import portfolio.project.bookingapp.dto.userdtos.UserRegistrationRequestDto;
+import portfolio.project.bookingapp.dto.userdtos.UserResponseDto;
+import portfolio.project.bookingapp.dto.userdtos.UserRoleUpdateResponseDto;
+import portfolio.project.bookingapp.dto.userdtos.UserUpdateRequestDto;
+import portfolio.project.bookingapp.model.User;
+import portfolio.project.bookingapp.model.role.Role;
+import portfolio.project.bookingapp.model.role.RoleName;
+
+@Mapper(config = MapperConfig.class)
+public interface UserMapper {
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "roles", ignore = true)
+    @Mapping(target = "authorities", ignore = true)
+    User toUser(UserRegistrationRequestDto userDto);
+
+    UserResponseDto toUserResponseDto(User updatedUser);
+
+    @Mapping(source = "id", target = "userId")
+    @Mapping(source = "roles", target = "roles", qualifiedByName = "mapRolesToRoleNames")
+    UserRoleUpdateResponseDto toUserRoleUpdateResponseDto(User updatedUser);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "password", ignore = true)
+    @Mapping(target = "roles", ignore = true)
+    @Mapping(target = "authorities", ignore = true)
+    void updateEntity(@MappingTarget User user, UserUpdateRequestDto request);
+
+    @Named("mapRolesToRoleNames")
+    default Set<RoleName> mapRolesToRoleNames(Set<Role> roles) {
+        return roles.stream()
+                .map(Role::getName)
+                .collect(Collectors.toSet());
+    }
+}
