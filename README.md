@@ -1,6 +1,6 @@
-# Booking API 📘✨
+# Reservation Management API 📘✨
 
-Welcome to the **Booking API**— an online accommodation booking service. This project provides a straightforward digital system for managing accommodation bookings efficiently.
+Welcome to the Reservation Management API — a streamlined solution for handling accommodation reservations. This service offers a robust digital infrastructure to manage bookings, payments, and notifications efficiently.
 
 ## About the Project 💻🏡
 This API enables users to book accommodations, manage reservations, process payments, and receive notifications seamlessly. Built using **Java** and **Spring Boot**, it ensures smooth operations for both renters and administrators.
